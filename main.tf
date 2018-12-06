@@ -19,7 +19,11 @@ resource "aws_vpc" "grimoire" {
 }
 
 resource "aws_vpc_dhcp_options" "grimoire" {
-  domain_name          = "grimoire.ca"
+  domain_name         = "grimoire.ca"
+  domain_name_servers = ["AmazonProvidedDNS"]
+
+  # Well-known IP from  <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html>
+  ntp_servers = ["169.254.169.123"]
 }
 
 resource "aws_vpc_dhcp_options_association" "grimoire" {
