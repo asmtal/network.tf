@@ -18,6 +18,15 @@ resource "aws_vpc" "grimoire" {
   assign_generated_ipv6_cidr_block = true
 }
 
+resource "aws_vpc_dhcp_options" "grimoire" {
+  domain_name          = "grimoire.ca"
+}
+
+resource "aws_vpc_dhcp_options_association" "grimoire" {
+  vpc_id          = "${aws_vpc.grimoire.id}"
+  dhcp_options_id = "${aws_vpc_dhcp_options.grimoire.id}"
+}
+
 resource "aws_subnet" "default" {
   vpc_id = "${aws_vpc.grimoire.id}"
 
