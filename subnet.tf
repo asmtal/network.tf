@@ -6,10 +6,18 @@ resource "aws_subnet" "default" {
 
   assign_ipv6_address_on_creation = true
   map_public_ip_on_launch         = true
+
+  tags {
+    Project = "network.tf"
+  }
 }
 
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.grimoire.id}"
+
+  tags {
+    Project = "network.tf"
+  }
 }
 
 resource "aws_default_route_table" "default" {
@@ -23,6 +31,10 @@ resource "aws_default_route_table" "default" {
   route {
     ipv6_cidr_block = "::/0"
     gateway_id      = "${aws_internet_gateway.default.id}"
+  }
+
+  tags {
+    Project = "network.tf"
   }
 }
 

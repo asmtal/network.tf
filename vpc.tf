@@ -2,6 +2,10 @@ resource "aws_vpc" "grimoire" {
   cidr_block = "10.1.0.0/16"
 
   assign_generated_ipv6_cidr_block = true
+
+  tags {
+    Project = "network.tf"
+  }
 }
 
 resource "aws_default_security_group" "default" {
@@ -29,6 +33,10 @@ resource "aws_default_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+
+  tags {
+    Project = "network.tf"
+  }
 }
 
 resource "aws_vpc_dhcp_options" "grimoire" {
@@ -37,6 +45,10 @@ resource "aws_vpc_dhcp_options" "grimoire" {
 
   # Well-known IP from  <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html>
   ntp_servers = ["169.254.169.123"]
+
+  tags {
+    Project = "network.tf"
+  }
 }
 
 resource "aws_vpc_dhcp_options_association" "grimoire" {
