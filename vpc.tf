@@ -3,13 +3,13 @@ resource "aws_vpc" "grimoire" {
 
   assign_generated_ipv6_cidr_block = true
 
-  tags {
+  tags = {
     Project = "network.tf"
   }
 }
 
 resource "aws_default_security_group" "default" {
-  vpc_id = "${aws_vpc.grimoire.id}"
+  vpc_id = aws_vpc.grimoire.id
 
   ingress {
     protocol  = -1
@@ -19,22 +19,22 @@ resource "aws_default_security_group" "default" {
   }
 
   ingress {
-    protocol  = "tcp"
-    from_port = 22
-    to_port   = 22
-    cidr_blocks = ["0.0.0.0/0"]
+    protocol         = "tcp"
+    from_port        = 22
+    to_port          = 22
+    cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  tags {
+  tags = {
     Project = "network.tf"
   }
 }
@@ -46,16 +46,17 @@ resource "aws_vpc_dhcp_options" "grimoire" {
   # Well-known IP from  <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html>
   ntp_servers = ["169.254.169.123"]
 
-  tags {
+  tags = {
     Project = "network.tf"
   }
 }
 
 resource "aws_vpc_dhcp_options_association" "grimoire" {
-  vpc_id          = "${aws_vpc.grimoire.id}"
-  dhcp_options_id = "${aws_vpc_dhcp_options.grimoire.id}"
+  vpc_id          = aws_vpc.grimoire.id
+  dhcp_options_id = aws_vpc_dhcp_options.grimoire.id
 }
 
 output "vpc_id" {
-  value = "${aws_vpc.grimoire.id}"
+  value = aws_vpc.grimoire.id
 }
+
